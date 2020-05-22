@@ -12,6 +12,9 @@
   box-sizing: border-box;
 }
 
+
+/* Shorthand font definition
+  Also seeting some padding on the bottom so that timeline elements aren't flush to the bottom of the screen to improve the aesthetic */
 body {
   font: normal 1rem/1.5 'Arial', sans-serif;
   background: var(--primary-colour);
@@ -24,6 +27,8 @@ header#main-header {
   background: var(--secondary-colour);  padding: 4rem 0;
 }
 
+/* Creating a container to improve presentation.
+  Setting margin to auto to center elements */
 .container {
   max-width: var(--max-width);
   margin: auto;
@@ -41,6 +46,9 @@ h1 {
   list-style: none;
 }
 
+/* Setting the position to relative so that the circles we create '::after' can be positioned absolutely
+  We are creating the list item to be 6px because the list items will actually constitute the timeline line itself,
+  and the inner list item divs will be what constitute the content for each list item. */
 #timeline ul li {
   position: relative;
   width: 6px;
@@ -49,6 +57,7 @@ h1 {
   background: #fff;
 }
 
+/* This is what will contain the list item content and will be used to create the arrow-looking icons using ':after' */
 #timeline ul li div {
   position: relative;
   width: 400px;
@@ -59,16 +68,26 @@ h1 {
   opacity: 0;
 }
 
+/* We reposition the odd list elements to push them to the left of the timeline.
+  Remember, the timeline is the list items, which have been centered the the center of the screen
+  We also transform the div so that, when the div is made visible, it transitions from slightly off the screen */
 #timeline ul li:nth-child(odd) div {
   left: -434px;
   transform: translateX(-200px);
 }
 
+/* The opposite is true here as from above */
 #timeline ul li:nth-child(even) div {
   left: 40px;
   transform: translateX(200px);
 }
 
+/* These values are applied to all div items contained within a list item that has the show class added to it.
+  The transform value must be set to !important because, lower in this css document, there is a media query which
+  applies a transform, and this value here must override the media query because we want the media query div to
+  appropriately transition.
+  We set the visibility to visible because, without the 'show' class, the div elements are invisible.
+  The same goes for the opacity value. */
 #timeline ul li.show div {
   transform: none !important;
   visibility: visible;
@@ -79,6 +98,10 @@ h1 {
   background: var(--secondary-colour);
 }
 
+/* Here we create the circles that appear on the timeline itself.
+  We are simply creating a 25px x 25px disk that sits atop the list items, and changes background
+  upon the list item div being 'shown' through the show class.
+  The original colour is inherited from the list item (white), and changes after transitioning */
 #timeline ul li::after {
   content: '';
   position: absolute;
@@ -93,6 +116,8 @@ h1 {
   transition: background 500ms ease-in-out;
 }
 
+/* These are the basic properties to support the arrows created below.
+  We set a width and height to 0 because it is in fact the border properties/sizes that will create the arrows */
 #timeline div::before {
   content: '';
   position: absolute;
@@ -102,6 +127,7 @@ h1 {
   border-style: solid;
 }
 
+/* Here we create the arrows for every even list item element's div */
 #timeline ul li:nth-child(even) div::before {
   left: -15px;
   border-width: 8px 16px 8px 0px;
@@ -114,6 +140,7 @@ h1 {
   border-color: transparent transparent transparent var(--secondary-colour);
 }
 
+/* We are resizing and repositioning items depending on the size of the screen */
 @media (max-width: 900px) {
   #timeline ul li div {
     width: 250px;
@@ -143,6 +170,7 @@ h1 {
     transform: translateX(200px);
   }
 
+  /* Moving the arrows after resizing for mobile compatability */
   #timeline ul li:nth-child(odd) div::before {
     left: -15px;
     border-width: 8px 16px 8px 0px;
