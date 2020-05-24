@@ -10,15 +10,23 @@ body {
   font-size: 1.2rem;
 }
 
+/* Have a 'current' class to make the background of the tab which corresponds to the current page coral, so the tab appears to merge with content below */
+.current {
+  background: coral;
+}
+
 #navbar ul {
   list-style: none; 
   background: #f7f7f7;
+  display: flex;
 }
 
+/* The display is set to inline-block so that the span elements are also placed on the same line */
 #navbar ul li {
   display: inline-block;
   position: relative;
   padding: 0.5rem 1rem;
+  margin: 0;
 }
 
 #navbar ul li:hover {
@@ -37,13 +45,16 @@ body {
 #navbar ul li ul {
   display: none;
   margin-top: 8px;
+  transform: translateX(-16px);
 }
 
+/* We position the ul absolutely so that we can get the dropdown effect. This is due to the ul being taken out of the document flow, which is necessary because, when it is invisible we don't want any free and invisible space for where it would otherwise be placed. */
 #navbar ul li:hover ul {
   display: block;
   position: absolute;
 }
 
+/* We position the list items relative because they do not need to be taken out from the document flow. */
 #navbar ul li:hover ul li {
   position: relative;
   padding: 1rem;
@@ -64,8 +75,9 @@ body {
   float: right;
   background: coral;
   color: #fff;
-  padding: 0.1rem 0.3rem;
+  padding: 0.2rem 0.5rem;
   border-radius: 5px;
+  text-align: center;
 }
 
 #navbar ul li:hover ul li:hover span {
@@ -76,4 +88,29 @@ body {
   #navbar ul li {
     display: block;
   }
+
+  /* The nested UL was originally positioned absolutely, which meant that it was positioned based on its parent container and was pulled out from the document flow. However, positioning it relative means that the UL is inserted back into the document flow and is given the space to be shown, meaning that the other elements make room for it. */
+  #navbar ul li:hover ul {
+    position: relative;
+    width: 100%;
+  }
+
+  #navbar ul li:hover ul li {
+    width: 100%
+  }
+}
+
+/* Showcase */
+#showcase {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 300px;
+  background: coral;
+  color: #fff;
+}
+
+#showcase h1 {
+  font-size: 4rem;;
 }
